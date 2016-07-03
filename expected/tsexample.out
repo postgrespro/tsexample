@@ -19,3 +19,23 @@ SELECT * FROM ts_parse('sample_parser', 'x-z p;<qwe> pg_config');
      1 | pg_config
 (5 rows)
 
+SELECT to_tsvector('sample', 'abcdef 12345678 xyz');
+                   to_tsvector                   
+-------------------------------------------------
+ '12345678':2 'abc':1 'abcdef':1 'def':1 'xyz':3
+(1 row)
+
+SELECT plainto_tsquery('sample', 'abcdef 12345678 xyz');
+                  plainto_tsquery                  
+---------------------------------------------------
+ ( 'abcdef' | 'abc' & 'def' ) & '12345678' & 'xyz'
+(1 row)
+
+SELECT * FROM ts_debug('sample', 'abcdef 12345678 xyz');
+ alias  |            description            |  token   | dictionaries | dictionary |     lexemes      
+--------+-----------------------------------+----------+--------------+------------+------------------
+ word   | Word, all alphanumeric characters | abcdef   | {cut3}       | cut3       | {abcdef,abc,def}
+ number | Number, all digits                | 12345678 | {simple}     | simple     | {12345678}
+ word   | Word, all alphanumeric characters | xyz      | {cut3}       | cut3       | {xyz}
+(3 rows)
+
