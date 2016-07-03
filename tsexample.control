@@ -1,0 +1,5 @@
+# tsexample extension
+comment = 'tsexample - example of custom postgresql full text search parser, dictionaries and configuration'
+default_version = '1.0'
+module_pathname = '$libdir/tsexample'
+relocatable = true

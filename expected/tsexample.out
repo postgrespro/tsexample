@@ -1,0 +1,21 @@
+CREATE EXTENSION tsexample;
+SELECT * FROM ts_parse('sample_parser', 'abc def 123 1xx yy3');
+ tokid | token 
+-------+-------
+     1 | abc
+     1 | def
+     2 | 123
+     1 | 1xx
+     1 | yy3
+(5 rows)
+
+SELECT * FROM ts_parse('sample_parser', 'x-z p;<qwe> pg_config');
+ tokid |   token   
+-------+-----------
+     1 | x
+     1 | z
+     1 | p
+     1 | qwe
+     1 | pg_config
+(5 rows)
+
